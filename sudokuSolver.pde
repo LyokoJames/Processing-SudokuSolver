@@ -11,9 +11,11 @@ void setup() {
                     {0,0,0,0,0,0,0,0,0},
                     {0,0,0,0,0,0,9,0,0},
                     {0,0,0,0,0,0,5,0,7} };
+  sudokoBoard originalBoard = new sudokoBoard(initialBoard,1);
   sudokoBoard board = new sudokoBoard(initialBoard,1);
   board.iterateTillSolved();
-  board.display();
+  board.display(0,false);
+  originalBoard.display(#FF0000,true);
 }
 
 void draw() {
@@ -83,23 +85,36 @@ class sudokoBoard {
    maxIterations = _maxIterations;
    iterations = 0;
  }
- void display() {
-   rect(width*1/11,height*1/11,width*9/11,height*9/11);
-   strokeWeight(1);
-   for (int n=1;n<=9;n++) {
-     line(width*n/11,height*1/11,width*n/11,height*10/11);
-     line(width*1/11,height*n/11,width*10/11,height*n/11);
-   }
-   strokeWeight(4);
-   for (int n=0;n<=4;n++) {
-     line(width*(1+3*n)/11,height*1/11,width*(1+3*n)/11,height*10/11);
-     line(width*1/11,height*(1+3*n)/11,width*10/11,height*(1+3*n)/11);
+ void display(int hexTextColour, boolean ovrLay) {
+   if (!ovrLay) {
+     rect(width*1/11,height*1/11,width*9/11,height*9/11);
+     strokeWeight(1);
+     for (int n=1;n<=9;n++) {
+       line(width*n/11,height*1/11,width*n/11,height*10/11);
+       line(width*1/11,height*n/11,width*10/11,height*n/11);
+     }
+     strokeWeight(4);
+     for (int n=0;n<=4;n++) {
+       line(width*(1+3*n)/11,height*1/11,width*(1+3*n)/11,height*10/11);
+       line(width*1/11,height*(1+3*n)/11,width*10/11,height*(1+3*n)/11);
+     }
    }
    textSize(32);
-   fill(0);
+   fill(hexTextColour);
    for (int y=0;y<9;y++) {
      for (int x=0;x<9;x++) {
-       text(boardSquares[y][x].myNumber,width*(1.25+x)/11,height*(1.75+y)/11);
+       if (boardSquares[y][x].myNumber != 0)
+         text(boardSquares[y][x].myNumber,width*(1.25+x)/11,height*(1.75+y)/11);
+       else {
+         textSize(12);
+         for (int i=0;i<3;i++) {
+           for (int j=0;j<3;j++) {
+             if (boardSquares[y][x].possibleNumbers[i*3+j] && !ovrLay)
+               text(i*3+j+1,width*(1.05+0.30*j+x)/11,height*(1.30+0.30*i+y)/11);
+           }
+         }
+         textSize(32);
+       }
      }
    }
    fill(255);
@@ -162,6 +177,8 @@ class sudokoBoard {
  
  void iterateTillSolved() {
    boolean solved = false;
+   this.iterate();
+   this.iterate();
    this.iterate();
  }
 } 
