@@ -1,8 +1,12 @@
 Processing-SudokuSolver
 =======================
 
-A simple Sudoku Solver made using processing for fun. Currently only includes the naked singles rule but 
-I am planning to add more.
+A simple Sudoku Solver made using processing for fun.
+
+#### Currently included rules:
+* Naked Singles
+* Hidden Singles
+
 
 People can also use the code themselves in accordance with the included gpl and lgpl liscences.
 
