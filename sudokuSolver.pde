@@ -56,20 +56,6 @@ class boardSquare {
     possibleNumbers[_number-1] = false;
   }
   
-  int returnSinglePosNum() {
-    int posNumCount = 0;
-    int _return = 0;
-    for (int i=0;i<9;i++) {
-      if(possibleNumbers[i]) posNumCount++;
-    }
-    if(posNumCount == 1) {
-      for (int i=0;i<9;i++) {
-        if(possibleNumbers[i]) _return = i+1;
-      }
-    }
-    else _return = 0;
-    return _return;
-  }
 }
 
 class sudokoBoard {
@@ -141,75 +127,24 @@ class sudokoBoard {
  }
  
  void hiddenSinglesRow(int row) {
-   int numOfCanidates = 0;
-   int canidateNumber = 0;
-   for(int x=0;x<9;x++) {
-     if (boardSquares[row][x].returnSinglePosNum() != 0) numOfCanidates++;
-   }
-   if (numOfCanidates == 1) {
-     for(int x=0;x<9;x++) {
-       if (boardSquares[row][x].returnSinglePosNum() != 0) 
-       canidateNumber = boardSquares[row][x].returnSinglePosNum();
-     }
-   }
-   else canidateNumber = 0;
-   if (canidateNumber != 0) {
-     for (int x=0;x<9;x++) {
-           boardSquares[row][x].removePosNum(canidateNumber);
-         }
-   }
+   // Insert Correct Function Here
  }
  
   void hiddenSinglesColumn(int column) {
-   int numOfCanidates = 0;
-   int canidateNumber = 0;
-   for(int y=0;y<9;y++) {
-     if (boardSquares[y][column].returnSinglePosNum() != 0) numOfCanidates++;
-   }
-   if (numOfCanidates == 1) {
-     for(int y=0;y<9;y++) {
-       if (boardSquares[y][column].returnSinglePosNum() != 0) 
-       canidateNumber = boardSquares[y][column].returnSinglePosNum();
-     }
-   }
-   else canidateNumber = 0;
-   if (canidateNumber != 0) {
-     for (int y=0;y<9;y++) {
-           boardSquares[y][column].removePosNum(canidateNumber);
-         }
-   }
+   // Insert Correct Function Here
  }
  
  void hiddenSinglesBox(int box) {
-   int numOfCanidates = 0;
-   int canidateNumber = 0;
-   for(int y=0;y<9;y++) {
-     for(int x=0;x<9;x++) {
-       if (boardSquareBoxes[y][x] == box)
-       if (boardSquares[y][x].returnSinglePosNum() != 0) numOfCanidates++;
-     }
-   }
-   if (numOfCanidates == 1) {
-     for(int y=0;y<9;y++) {
-       for(int x=0;x<9;x++) {
-         if (boardSquareBoxes[y][x] == box)
-         if (boardSquares[y][x].returnSinglePosNum() != 0) 
-         canidateNumber = boardSquares[y][x].returnSinglePosNum();
-       }
-     }
-   }
-   else canidateNumber = 0;
-   if (canidateNumber != 0) {
-     for (int x=0;x<9;x++) {
-       for(int y=0;y<9;y++) {
-         if (boardSquareBoxes[y][x] == box)
-         boardSquares[y][x].removePosNum(canidateNumber);
-       }
-     }
-   }
+   // Insert Correct Function Here
  }
  
- 
+ void hiddenSingles() {
+   for (int i=0;i<9;i++) {
+     hiddenSinglesRow(i);
+     hiddenSinglesColumn(i);
+     hiddenSinglesBox(i)
+   }
+ }
  
  void checkNumbers() {
    for (int y=0;y<9;y++) {
@@ -221,6 +156,7 @@ class sudokoBoard {
  
  void iterate() {
    this.nakedSingles();
+   this.hiddenSingles();
    this.checkNumbers();
  }
  
