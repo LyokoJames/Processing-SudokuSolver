@@ -142,7 +142,7 @@ class sudokoBoard {
    for (int i=0;i<9;i++) {
      hiddenSinglesRow(i);
      hiddenSinglesColumn(i);
-     hiddenSinglesBox(i)
+     hiddenSinglesBox(i);
    }
  }
  
