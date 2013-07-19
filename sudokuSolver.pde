@@ -1,16 +1,31 @@
+/*
+    Blank Board for Copy-Pasting
+
+                  { {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0} };
+
+*/
+
 void setup() {
   size(450,450);
   background(#FF8800);
   int[][] initialBoard = 
-                  { {0,0,0,0,0,0,8,0,0},
-                    {0,0,0,0,0,0,6,0,0},
-                    {0,0,0,2,0,0,3,0,0},
-                    {0,0,0,0,0,0,2,0,0},
-                    {0,0,0,0,0,0,1,0,0},
+                  { {0,0,0,0,0,0,0,0,0},
                     {0,0,0,0,0,0,0,0,0},
                     {0,0,0,0,0,0,0,0,0},
-                    {0,0,0,0,0,0,9,0,0},
-                    {0,0,0,0,0,0,5,0,7} };
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0} };
   sudokoBoard originalBoard = new sudokoBoard(initialBoard,1);
   sudokoBoard board = new sudokoBoard(initialBoard,1);
   board.iterateTillSolved();
@@ -56,6 +71,14 @@ class boardSquare {
   
   void removePosNum(int _number) {
     possibleNumbers[_number-1] = false;
+  }
+  
+  void setNumber(int _number) {
+    myNumber = _number;
+     for (int i=0;i<9;i++)  {
+        possibleNumbers[i] = false;
+     }
+     possibleNumbers[_number-1] = true;
   }
   
 }
@@ -133,7 +156,8 @@ class sudokoBoard {
          }
          for (int _y=0;_y<9;_y++) {
            for (int _x=0;_x<9;_x++) {
-             if(boardSquareBoxes[_y][_x] == boardSquareBoxes[y][x]) boardSquares[_y][_x].removePosNum(num);
+             if(boardSquareBoxes[_y][_x] == boardSquareBoxes[y][x])
+               boardSquares[_y][_x].removePosNum(num);
            }
          }
        }
@@ -142,15 +166,62 @@ class sudokoBoard {
  }
  
  void hiddenSinglesRow(int row) {
-   // Insert Correct Function Here
+   for (int i=0;i<9;i++) {
+     int posNumCount = 0;
+     for (int x=0;x<9;x++) {
+       if (boardSquares[row][x].possibleNumbers[i])
+         posNumCount++;
+     }
+     if (posNumCount == 1) {
+       for (int x=0;x<9;x++) {
+         if (boardSquares[row][x].possibleNumbers[i])
+           boardSquares[row][x].setNumber(i+1);
+       }
+     }
+   }
  }
  
   void hiddenSinglesColumn(int column) {
-   // Insert Correct Function Here
+   for (int i=0;i<9;i++) {
+     int posNumCount = 0;
+     for (int y=0;y<9;y++) {
+       if (boardSquares[y][column].possibleNumbers[i])
+         posNumCount++;
+     }
+     if (posNumCount == 1) {
+       for (int y=0;y<9;y++) {
+         if (boardSquares[y][column].possibleNumbers[i])
+           boardSquares[y][column].setNumber(i+1);
+       }
+     }
+   }
  }
  
- void hiddenSinglesBox(int box) {
-   // Insert Correct Function Here
+ void hiddenSinglesBox(int _box) {
+   int boxX = _box % 3;
+   int boxY = floor(_box/3);
+   boxX *= 3; boxY *= 3;
+   for (int i=0;i<9;i++) {
+     int posNumCount = 0;
+     for (int _y=0;_y<9;_y++) {
+       for (int _x=0;_x<9;_x++) {
+         if(boardSquareBoxes[_y][_x] == boardSquareBoxes[boxY][boxY]) {
+           if (boardSquares[_y][_x].possibleNumbers[i])
+             posNumCount++;
+         }
+       }
+     }
+     if (posNumCount == 1) {
+       for (int _y=0;_y<9;_y++) {
+         for (int _x=0;_x<9;_x++) {
+           if(boardSquareBoxes[_y][_x] == boardSquareBoxes[boxY][boxY]) {
+             if (boardSquares[_y][_x].possibleNumbers[i])
+               boardSquares[_y][_x].setNumber(i+1);
+           }
+         }
+       }
+     }
+   }
  }
  
  void hiddenSingles() {
