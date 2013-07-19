@@ -294,7 +294,7 @@ class sudokoBoard {
  
  void iterateTillSolved() {
    boolean solved = false;
-   for (i = 0;i<= 1000;i++) {
+   for (int i = 0;i<= 1000;i++) {
      this.iterate();
    }
  }
