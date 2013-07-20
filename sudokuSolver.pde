@@ -62,12 +62,20 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  if (key - 48 >= 1 && key - 48 <= 9 && editing) {
+  if (key - 48 >= 0 && key - 48 <= 9 && editing) {
     editingBoard.edit(key-48);
     editingBoard.display(0,false);
     solvingBoard.edit(key-48);
     solvingBoard.display(0,false);
   }
+  
+  if(key == ESC && editing) {
+    editingBoard.edit(0);
+    editingBoard.display(0,false);
+    solvingBoard.edit(0);
+    solvingBoard.display(0,false);
+  }
+  
   if (key == ENTER && editing) {
     solvingBoard.iterateTillSolved();
     solvingBoard.toStatic().display(0,false);
@@ -120,10 +128,17 @@ class boardSquare {
   
   void setNumber(int _number) {
     myNumber = _number;
-     for (int i=0;i<9;i++)  {
-        possibleNumbers[i] = false;
-     }
-     possibleNumbers[_number-1] = true;
+    if (_number != 0) {
+       for (int i=0;i<9;i++)  {
+          possibleNumbers[i] = false;
+       }
+       possibleNumbers[_number-1] = true;
+    }
+    else {
+      for (int i=0;i<9;i++)  {
+          possibleNumbers[i] = true;
+       }
+    }
   }
   
 }
