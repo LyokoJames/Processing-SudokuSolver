@@ -313,7 +313,7 @@ class editableBoard extends sudokoBoard {
   }
   
   void edit(int i) {
-    if (editX != 0 && editY != 0) {
+    if (editX >= 1 && editX <= 9 && editY >= 1 && editY <= 9) {
       boardSquares[editY-1][editX-1].setNumber(i);
       editX = 0;
       editY = 0;
@@ -322,7 +322,7 @@ class editableBoard extends sudokoBoard {
   
   void display(int _i, boolean _bool) {
     super.display(_i, _bool);
-    if (editX != 0 && editY != 0) {
+    if (editX >= 1 && editX <= 9 && editY >= 1 && editY <= 9) {
       fill(255);
       strokeWeight(0);
       rect(width*editX/11,height*editY/11,width/11+1,height/11+1);
